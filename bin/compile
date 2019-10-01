@@ -33,7 +33,6 @@ fi
 
 echo "Extract pandoc from $PANDOC_PKG to $VENDOR_DIR/pandoc"
 tar xvzf $PANDOC_PKG --strip-components 1 -C $VENDOR_DIR/pandoc
-rm -rf $PANDOC_PKG
 
 echo "Set permissions on extracted binaries"
 chmod 755 $BIN_DIR/pandoc
