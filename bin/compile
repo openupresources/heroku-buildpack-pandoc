@@ -9,16 +9,18 @@ PANDOC_FILENAME="pandoc-2.7.3-linux.tar.gz"
 PANDOC_URL="https://github.com/jgm/pandoc/releases/download/2.7.3/$PANDOC_FILENAME"
 VENDOR_DIR="$BUILD_DIR/vendor"
 BIN_DIR="$VENDOR_DIR/pandoc/bin"
-REAL_DIR="$HOME/vendor/pandoc/bin"
+RUNTIME_DIR="\$HOME/vendor/pandoc/bin"
 PANDOC_PKG="$CACHE_DIR/$PANDOC_FILENAME"
 
-mkdir -p $BUILD_DIR $CACHE_DIR $VENDOR_DIR $BIN_DIR $REAL_DIR
+mkdir -p $BUILD_DIR $CACHE_DIR $VENDOR_DIR $BIN_DIR
 
-echo "BUILD_DIR: $BUILD_DIR"
-echo "CACHE_DIR: $CACHE_DIR"
-echo "VENDOR_DIR: $VENDOR_DIR"
-echo "BIN_DIR: $BIN_DIR"
-echo "REAL_DIR: $REAL_DIR"
+verbose "BUILD_DIR: $BUILD_DIR"
+verbose "CACHE_DIR: $CACHE_DIR"
+verbose "VENDOR_DIR: $VENDOR_DIR"
+verbose "INSTALL_DIR: $INSTALL_DIR"
+verbose "BIN_DIR: $BIN_DIR"
+verbose "SHARE_DIR: $SHARE_DIR"
+verbose "RUNTIME_DIR: $RUNTIME_DIR"
 
 if [ -f $PANDOC_PKG ]; then
   echo "Using cached pandoc pkg: $PANDOC_PKG"
@@ -42,7 +44,7 @@ ls -lR $BIN_DIR
 
 PROFILE_PATH="$BUILD_DIR/.profile.d/pandoc.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo "export PATH=$REAL_DIR:\$PATH" > $PROFILE_PATH
+echo "export PATH=$RUNTIME_DIR:\$PATH" > $PROFILE_PATH
 
 echo "created $PROFILE_PATH:"
 cat $PROFILE_PATH
