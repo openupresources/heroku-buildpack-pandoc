@@ -2,9 +2,21 @@
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+APT_CACHE_DIR="$CACHE_DIR/apt/cache"
+APT_STATE_DIR="$CACHE_DIR/apt/state"
+
+mkdir -p "$APT_CACHE_DIR/archives/partial"
+mkdir -p "$APT_STATE_DIR/lists/partial"
+
+APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
+
+echo "Updating apt caches"
+apt-get $APT_OPTIONS update
+
+echo "Intalling rsvg-convert — used by Pandoc when handling SVGs"
+apt-get $APT_OPTIONS -y --force-yes -d install --reinstall librsvg2-bin
 
 echo "Install pandoc from $PANDOC_URL"
-
 PANDOC_FILENAME="pandoc-2.19.2-linux-amd64.tar.gz"
 PANDOC_URL="https://github.com/jgm/pandoc/releases/download/2.19.2/$PANDOC_FILENAME"
 VENDOR_DIR="$BUILD_DIR/vendor"
